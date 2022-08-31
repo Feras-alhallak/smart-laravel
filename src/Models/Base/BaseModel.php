@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Base;
+namespace Ferasalhallak\SmartLaravel\Models\Base;
 
 class BaseModel extends BaseModel
 {
