@@ -1,9 +1,9 @@
 <?php
 
-namespace Namaa\Cms\Traits;
+namespace Ferasalhallak\SmartLaravel\Traits;
 
 use Illuminate\Support\Str;
-use Namaa\Cms\Helpers\S3Helper;
+use Ferasalhallak\SmartLaravel\Helpers\S3Helper;
 
 trait HasS3Objects
 {

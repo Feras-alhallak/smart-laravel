@@ -1,6 +1,6 @@
 <?php
 
-namespace Namaa\Cms\Traits;
+namespace Ferasalhallak\SmartLaravel\Traits;
 
 
 trait ListTrait

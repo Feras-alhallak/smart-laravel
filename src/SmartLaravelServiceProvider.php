@@ -1,6 +1,6 @@
 <?php
 
-namespace Namaa\Cms;
+namespace Ferasalhallak\SmartLaravel;
 
 use Illuminate\Support\ServiceProvider;
 
