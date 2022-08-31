@@ -5,8 +5,10 @@ namespace Ferasalhallak\SmartLaravel\Traits;
 use Illuminate\Support\Str;
 use Ferasalhallak\SmartLaravel\Helpers\S3Helper;
 
+
 trait HasS3Objects
 {
+
     public static function bootHasS3Objects(): void
     {
         self::created(function ($model) {
@@ -18,15 +20,17 @@ trait HasS3Objects
         });
 
         self::updating(function ($model) {
-            if (self::$s3Folder ?? false) {
-                $folder = self::$s3Folder;
-            } else if (Str::contains(app()->request->getRequestUri(), '/admin-panal/')) {
-                $folder = 'public/admin-panal/' . $model->table . '/';
-            }else{
-                $folder = 'public/tenant_' . app('currentTenant')->name . '/' . $model->table . '/';
+
+            if ($model->table == 'companies') {
+                $folder = 'public/company_' . $model->id . '/' . $model->table . '/';
+            } else {
+                try {
+                    $folder = 'public/company_' . app('currentTenant')->company_id . '/' . $model->table . '/';
+                } catch (\Throwable $th) {
+                    $folder = 'public/misc' . '/' . $model->table . '/';
+                }
             }
             foreach ($model->s3Object as $value) {
-
                 if (array_key_exists($value, $model->attributes) && Str::contains($model->attributes[$value], 'temp/')) {
                     $model->attributes[$value] = str_replace(env('AWS_S3_URL'),'',$model->attributes[$value]);
 
@@ -41,4 +45,5 @@ trait HasS3Objects
             }
         });
     }
+
 }
