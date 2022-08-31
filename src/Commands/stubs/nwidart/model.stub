@@ -1,0 +1,21 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use App\Models\Base\BaseModel as Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class $CLASS$ extends Model
+{
+    use SoftDeletes;
+
+    protected $hidden = [
+        'updated_at',
+        'created_at',
+        'deleted_at',
+    ];
+
+    protected $fillable = [
+
+    ];
+}

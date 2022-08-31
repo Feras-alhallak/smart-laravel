@@ -1,0 +1,74 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+
+class $CLASS$ extends Controller
+{
+
+    public $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
+
+    public function index(Request $request)
+    {
+        $list = $this->model
+            ->dynamicFilter(['name' => 'LIKE'])
+            ->orderByCrud('created_at')
+            ->paginate($request->pageSize);
+
+        return $this->SuccessResponse([
+            'list' => $list,
+            'new_items_chart' => $this->model->newItemChart()->get(),
+            'total_statistics' => $this->model->totalStatistics([
+                'total_' => [],
+            ]),
+        ]);
+    }
+
+
+    public function store(Request $request)
+    {
+        $object = $this->model->create($request->all());
+
+        return $this->SuccessResponse(['message' =>  'Created successfully', 'id' => $object->id]);
+    }
+
+
+    public function show($id)
+    {
+        $object = $this->model->with([])->find($id);
+
+        return $this->SuccessResponse(['item' => $object]);
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $item = $this->model->with([])->findOrFail($id);
+
+        $data = $request->all();
+        $item->update($data);
+
+        return $this->SuccessResponse(['message' =>  'Updated successfully', 'id' => $id]);
+    }
+
+
+    public function destroy($id)
+    {
+        try {
+            $item = $this->model->findOrFail($id);
+            $item->delete();
+
+            return $this->SuccessResponse(['message' => 'Deleted successfully']);
+        } catch (\Throwable $th) {
+            return $this->ErrorResponse('Item not deleteable');
+        }
+    }
+}
