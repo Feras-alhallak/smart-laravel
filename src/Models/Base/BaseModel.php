@@ -2,14 +2,8 @@
 
 namespace App\Models\Base;
 
-use App\Traits\Scopes;
-use Illuminate\Database\Eloquent\Model;
-
-class BaseModel extends Model
+class BaseModel extends BaseModel
 {
-    use Scopes;
-
-
 
     public function totalStatistics($statistics, $period = 'last_12_month')
     {
