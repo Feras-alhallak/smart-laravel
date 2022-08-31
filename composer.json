@@ -8,7 +8,8 @@
         }
     ],
     "require": {
-        "aws/aws-sdk-php": "^3.218"
+        "aws/aws-sdk-php": "^3.218",
+        "laravel/framework": "^8.0"
     },
     "minimum-stability": "dev",
     "extra": {
